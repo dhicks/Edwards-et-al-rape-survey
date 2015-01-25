@@ -28,6 +28,7 @@ from __future__ import division        # Fix division
 import matplotlib.pyplot as plt
 import pandas as pd
 from scipy.misc import comb            # Binomial coefficient
+from scipy.stats import beta           # Beta distribution, for priors
 
 # Number of subintervals
 bins = 100
@@ -35,7 +36,9 @@ bins = 100
 # Define left endpoints of intervals
 endpoints = [x/bins for x in range(bins)]
 # Define uninformative (uniform) prior
-priors = [1/bins] * bins
+#priors = [1/bins] * bins
+# Define skeptic's prior: left-heavy beta distribution
+priors = beta.pdf(endpoints, 1, 10)
 # Observational data
 # Number who answered 'yes'
 k = 26
@@ -53,8 +56,15 @@ marginal = sum(rho['likelihood'] * rho['prior'])
 # Posterior = likelihood * prior / marginal
 rho['post'] = rho['likelihood'] * rho['prior'] / marginal
 
-# Plot the posterior distibution
-plt.plot(rho['endpoint'], rho['prior'], color='red')
-plt.plot(rho['endpoint'], rho['post'])
+# Plot the prior and posterior distibutions
+fig, ax1 = plt.subplots()
+ax1.plot(rho['endpoint'], rho['post'])
+ax1.set_ylabel(r'Pr($\rho$ | Data)', color='blue')
+plt.xlabel(r'$\rho$')
+
+ax2 = ax1.twinx()
+ax2.plot(rho['endpoint'], rho['prior'], color='red')
+ax2.set_ylabel(r'Pr($\rho$)', color='red')
+#plt.show()
 # How much of the plot density is to the left of .2?
 print(sum(rho[rho['endpoint'] <= .2]['post']))

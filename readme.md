@@ -3,7 +3,7 @@ Bayesian model for Edwards et al., "Denying Rape but Endorsing Forceful Intercou
 [http://online.liebertpub.com/doi/pdf/10.1089/vio.2014.0022]()
 
 Men who would intend to force a woman to have sex: 
-![intention to force - post PDF.png]()
+![force.png](force.png "Posterior probability estimate for the percentage of men who would intend to force a woman to have sex")
 
 Men who would intend to rape:  
-![rape - post PDF.png]()
+![rape.png](rape.png "Posterior probability estimate for the percentage of men who would intend to rape")
